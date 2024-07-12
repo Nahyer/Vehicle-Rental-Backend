@@ -1,0 +1,37 @@
+GET http://localhost:3000/api/Fleet_Management
+###
+
+GET http://localhost:3000/Fleet_Management?limit=2
+###
+
+GET http://localhost:3000/Fleet_Management/13
+###
+
+POST http://localhost:3000/Fleet_Management/create
+Content-Type: application/json
+
+{
+    "vehicle_id": 1,
+    "acquisition_date": "2021-09-01",
+    "depreciation_rate": 0.5,
+    "current_value": 1000,
+    "maintenance_cost": 100,
+    "status": "New Status"
+
+}
+###
+
+PUT http://localhost:3000/Fleet_Management/1
+Content-Type: application/json
+
+{
+   "vehicle_id": 1,
+    "acquisition_date": "2021-09-01",
+    "depreciation_rate": 0.5,
+    "current_value": 1000,
+    "maintenance_cost": 100,
+    "status": "New Status"
+}
+###
+
+DELETE http://localhost:3000/Fleet_Management/12

@@ -1,0 +1,31 @@
+GET http://localhost:5000/api/Vehicles
+###
+
+GET http://localhost:5000/api/Vehicles?limit=2
+###
+
+GET http://localhost:5000/api/Vehicles/13
+###
+
+POST http://localhost:5000/api/Vehicles/create
+Content-Type: application/json
+
+{
+
+  "vehicleSpec_id": 1,
+  "rental_rate": 100,
+  "availability": true
+}
+###
+
+PUT http://localhost:5000/api/Vehicles/1
+Content-Type: application/json
+
+{
+  "vehicleSpec_id": 1,
+  "rental_rate": 100,
+  "availability": true
+}
+###
+
+DELETE http://localhost:5000/api/Vehicles/12

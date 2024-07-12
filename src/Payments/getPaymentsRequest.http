@@ -1,0 +1,33 @@
+GET http://localhost:3000/Payments
+###
+
+GET http://localhost:3000/Payments?limit=2
+###
+
+GET http://localhost:3000/Payments/13
+###
+
+POST http://localhost:3000/Payments/create
+Content-Type: application/json
+
+{
+  "name": "Sample Name",
+  "code": "Sample Code",
+  "city": "Sample City"
+}
+###
+
+PUT http://localhost:3000/Payments/1
+Content-Type: application/json
+
+{
+  "name": "Updated Name",
+  "code": "Updated Code",
+  "city": "Updated City"
+}
+###
+
+DELETE http://localhost:3000/Payments/12
+###
+
+GET http://localhost:5000/Payments/startcheckout

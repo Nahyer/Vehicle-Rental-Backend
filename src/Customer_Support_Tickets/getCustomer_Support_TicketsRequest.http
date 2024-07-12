@@ -1,0 +1,34 @@
+GET http://localhost:3000/Customer_Support_Tickets
+###
+
+GET http://localhost:3000/Customer_Support_Tickets?limit=2
+###
+
+GET http://localhost:3000/Customer_Support_Tickets/13
+###
+
+POST http://localhost:3000/Customer_Support_Tickets/create
+Content-Type: application/json
+
+{
+ 
+
+    "user_id": 1,
+    "subject": "New Subject",
+    "description": "New Description",
+    "status": "New Status"
+}
+###
+
+PUT http://localhost:3000/Customer_Support_Tickets/1
+Content-Type: application/json
+
+{
+  "user_id": 1,
+    "subject": "New Subject",
+    "description": "New Description",
+    "status": "New Status"
+}
+###
+
+DELETE http://localhost:3000/Customer_Support_Tickets/12

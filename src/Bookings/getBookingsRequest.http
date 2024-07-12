@@ -1,0 +1,38 @@
+GET http://localhost:3000/Bookings
+###
+
+GET http://localhost:3000/Bookings?limit=2
+###
+
+GET http://localhost:3000/Bookings/13
+###
+
+POST http://localhost:5000/api/bookings/add
+Content-Type: application/json
+
+{
+  
+    "user_id": 1,
+    "vehicle_id": 1,
+    "location_id": 1,
+    "booking_date": "2021-09-01",
+    "return_date": "2021-09-10",
+    "total_amount": 1000
+
+}
+###
+
+PUT http://localhost:3000/Bookings/1
+Content-Type: application/json
+
+{
+   "user_id": 1,
+    "vehicle_id": 1,
+    "location_id": 1,
+    "booking_date": "2021-09-01",
+    "return_date": "2021-09-10",
+    "total_amount": 1000
+}
+###
+
+DELETE http://localhost:3000/Bookings/12

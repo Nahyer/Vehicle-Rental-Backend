@@ -1,0 +1,42 @@
+GET http://localhost:5000/api/Vehicle_Specifications
+###
+
+GET http://localhost:5000/api/Vehicle_Specifications?limit=2
+###
+
+GET http://localhost:5000/api/Vehicle_Specifications/13
+###
+
+POST http://localhost:5000/api/Vehicle_Specifications/create
+Content-Type: application/json
+
+{
+  "manufacturer": "Ferrari",
+  "model": "F8 Tributo",
+  "year": 2023,
+  "fuel_type": "Petrol",
+  "engine_capacity": 49000,
+  "transmission": "Automatic",
+  "seating_capacity": 2,
+  "color": "Red",
+  "features": "Turbocharged, Rear-Wheel Drive, Carbon-Fiber Interior, Advanced Infotainment System"
+}
+###
+
+PUT http://localhost:5000/api/Vehicle_Specifications/2
+Content-Type: application/json
+
+{
+  "manufacturer": "Ferrari",
+  "model": "F8 Tributo",
+  "year": 2023,
+  "fuel_type": "Petrol",
+  "engine_capacity": 5000,
+  "transmission": "Automatic",
+  "seating_capacity": 2,
+  "color": "Red",
+  "features": "Turbocharged, Rear-Wheel Drive, Carbon-Fiber Interior, Advanced Infotainment System"
+}
+###
+
+DELETE http://localhost:5000/api/Vehicle_Specifications/12

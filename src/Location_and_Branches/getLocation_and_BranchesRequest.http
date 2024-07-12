@@ -1,0 +1,30 @@
+GET http://localhost:5000/api/branchlocations/
+###
+
+GET http://localhost:5000/api/branchlocations?limit=2
+###
+
+GET http://localhost:5000/api/branchlocations/13
+###
+
+POST http://localhost:5000/api/branchlocations/create
+Content-Type: application/json
+
+{
+     "name": "Suburban Branch",
+    "address": "789 Suburb Ln, Suburbia",
+    "contact_phone": "555-9012"
+}
+###
+
+PUT http://localhost:5000/api/branchlocations/1
+Content-Type: application/json
+
+{
+    "name": "Suburban Branch",
+    "address": "789 Suburb Ln, Suburbia",
+    "contact_phone": "555-9012"
+}
+###
+
+DELETE http://localhost:5000/api/branchlocations/12

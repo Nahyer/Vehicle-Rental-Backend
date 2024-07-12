@@ -1,0 +1,30 @@
+POST  http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "fullname": "reyhan",
+    "email": "reyhan@gmail.com",
+    "contactPhone": "ffrfr",
+    "address": "123, Main Street, New York",
+    "username": "juuki",
+    "password": "password"  
+}
+
+
+###
+POST  http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "johndoe",
+    "password": "password"
+}
+
+###
+POST  http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "juuki",
+    "password": "password"
+}
