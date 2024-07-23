@@ -3,14 +3,18 @@ import { Hono } from "hono";
      GetVehiclesById, UpdateVehicles, DeleteVehicles} from "./Vehicles.controller";
 import { VehiclesSchema } from "../validator";
 import { zValidator } from "@hono/zod-validator";
+import { authorizeAdmin, authorizeCustomer } from "../middleware/authorize";
 export const VehiclesRouter = new Hono().basePath('/vehicles')
 
-VehiclesRouter.get("", ListsVehicless);
+VehiclesRouter.get("",authorizeCustomer, ListsVehicless);
+VehiclesRouter.get("/available",authorizeCustomer, ListsVehicless);
 VehiclesRouter.get("/:id", GetVehiclesById);
-VehiclesRouter.post("/create",zValidator('json', VehiclesSchema, (result, c) => {
+VehiclesRouter.post("/create",authorizeAdmin,zValidator('json', VehiclesSchema, (result, c) => {
   if (!result.success) {
     return c.json(result.error, 400)
   }
 }),CreateVehicles);
-VehiclesRouter.put("/:id", UpdateVehicles);
-VehiclesRouter.delete("/:id", DeleteVehicles);
+VehiclesRouter.put("/:id",authorizeAdmin, UpdateVehicles);
+VehiclesRouter.delete("/:id",authorizeAdmin, DeleteVehicles);
+
+

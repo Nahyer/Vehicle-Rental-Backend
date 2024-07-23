@@ -36,7 +36,7 @@ export const CustomerSupportTicketSchema = z.object({
     status: z.string()
 })
 //Vehicle_SpecificationsSchema
-export const Vehicle_SpecificationsSchema = z.object({
+export const VehicleSpecSchema = z.object({
     manufacturer: z.string(),
     model: z.string(),
     year: z.number(),
@@ -45,7 +45,8 @@ export const Vehicle_SpecificationsSchema = z.object({
     transmission: z.string(),
     seating_capacity: z.number(),
     color: z.string(),
-    features: z.string()
+    features: z.string(),
+    rental_rate: z.number()   
 })
 
 export const LocationBranchesSchema = z.object({

@@ -1,12 +1,17 @@
 import { Context } from "hono";
 
-import { getVehiclessService, createVehiclesService, getVehiclesByIdService, updateVehiclesService, DeleteVehiclesByIdService } from "./Vehicles.service";
+import { getVehiclessService, createVehiclesService, getVehiclesByIdService, updateVehiclesService, DeleteVehiclesByIdService, getAvailableVehiclesService } from "./Vehicles.service";
+import { TSVehicles } from "../drizzle/schema";
 
 
 export const ListsVehicless = async(c: Context) => {
   try {           
-    const limit = Number(c.req.query('limit')) 
-    const data = await getVehiclessService(limit);
+    const limit = Number(c.req.query('limit'))
+    let data:TSVehicles[] | null;
+    const available = c.req.url.endsWith('/available');
+    console.log("🚀 ~ ListsVehicless ~ available:", available);
+    
+    available ?  data = await getAvailableVehiclesService(limit) : data = await getVehiclessService(limit)
     if(!data || data.length == 0) return c.json("No data found" , 404);
     return c.json(data, 200);
   } catch (error: any) {
@@ -17,7 +22,7 @@ export const ListsVehicless = async(c: Context) => {
 export const GetVehiclesById = async(c: Context) => {
   try {
     const id = parseInt(c.req.param('id'));
-    if (isNaN(id)) return c.text("Invalid ID", 400);
+    if (isNaN(id)) return c.text("Invalid ID hh", 400);
     const Vehicles = await getVehiclesByIdService(id);
     if(!Vehicles) return c.json({ message: "Vehicles not found"},404);
     return c.json(Vehicles);

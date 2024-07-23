@@ -8,8 +8,19 @@ export const getCustomer_Support_TicketssService = async (limit?: number): Promi
     limit: limit,
   });
   }
-  return await db.query.customerSupportTickets.findMany();
+  return await db.query.customerSupportTickets.findMany({
+    with: {
+      users:{
+        columns:{
+          full_name:true,
+          email:true,
+
+        }
+      }  
+    }
+  });
 };
+
 export const getCustomer_Support_TicketsByIdService = async (id: number): Promise<TSCustomerSupportTickets | undefined> => {
   return await db.query.customerSupportTickets.findFirst({
    where: eq(customerSupportTickets.user_id,id)

@@ -1,6 +1,8 @@
 import { eq } from "drizzle-orm";
 import db from "../drizzle/db";
 import { TIVehicleSpecs, TSVehicleSpecs, vehicleSpecs } from "../drizzle/schema";
+import { z } from "zod";
+import { VehicleSpecSchema } from "../validator";
 
 export const getVehicle_SpecificationssService = async (limit?: number): Promise<TSVehicleSpecs[] | null> => {
   if (limit) {
@@ -16,9 +18,8 @@ export const getVehicle_SpecificationsByIdService = async (id: number): Promise<
   })
 }
 
-export const createVehicle_SpecificationsService = async (vspecs: TIVehicleSpecs) => {
-  await db.insert(vehicleSpecs).values(vspecs)
-  return `$Vehicle ${vspecs.model}, has been created`;
+export const createVehicle_SpecificationsService = async (vspecs: z.infer<typeof VehicleSpecSchema>): Promise<{ specId: number}[] | null > => {
+  return await db.insert(vehicleSpecs).values(vspecs).returning({ specId: vehicleSpecs.vehicleSpec_id });
 }
 
 export const updateVehicle_SpecificationsService = async (id: number, vspecs: TIVehicleSpecs) => {

@@ -13,6 +13,8 @@ import { csrf } from 'hono/csrf'
 import { Location_and_BranchesRouter } from './Location_and_Branches/Location_and_Branches.router';
 import { BookingsRouter } from './Bookings/Bookings.router';
 import { Fleet_ManagementRouter } from './Fleet_Management/Fleet_Management.router';
+import { Customer_Support_TicketsRouter } from './Customer_Support_Tickets/Customer_Support_Tickets.router';
+import { uploadRouter } from './secureUpload/upload.router';
 
 
 
@@ -43,6 +45,9 @@ app.route('/api', Location_and_BranchesRouter)
 app.route('/api', BookingsRouter)
 app.route('/api', PaymentsRouter)
 app.route('/api', Fleet_ManagementRouter)
+app.route('/api', Vehicle_SpecificationsRouter)
+app.route('/api', Customer_Support_TicketsRouter)
+app.route('/api', uploadRouter)
 
 
 serve({

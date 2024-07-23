@@ -1,5 +1,6 @@
 import { pgTable, serial, text, varchar, integer, primaryKey, timestamp, boolean, decimal, pgEnum } from "drizzle-orm/pg-core";
 import {  relations } from "drizzle-orm";
+import { number } from "zod";
 
 
 export const locationsBranches = pgTable("locations_branches", {
@@ -68,7 +69,7 @@ export const bookingsRelations = relations(bookings, ({one,many})=>({
 export const vehicles = pgTable("vehicles", {
     vehicle_id: serial('vehicle_id').primaryKey(),
     vehicleSpec_id: integer('vehicleSpec_id').notNull().references(()=>vehicleSpecs.vehicleSpec_id,{onDelete: 'cascade'}),
-    rental_rate: decimal('rental_rate').notNull(),
+    rental_rate: integer('rental_rate').notNull(),
     availability: boolean('availability').notNull(),
     created_at: timestamp('created_at').defaultNow(),
     updated_at: timestamp('updated_at').defaultNow()
@@ -89,11 +90,12 @@ export const vehicleSpecs = pgTable("vehicleSpecs", {
     model: varchar('model').notNull(),
     year: integer('year').notNull(),
     fuel_type: varchar('fuel_type').notNull(),
-    engine_capacity: decimal('engine_capacity').notNull(),
+    engine_capacity: integer('engine_capacity').notNull(),
     transmission: varchar('transmission').notNull(),
     seating_capacity: integer('seating_capacity').notNull(),
     color: varchar('color').notNull(),
     features: text('features').notNull(),
+    image_url: text('image_url')
 })
 
 export const vehicleSpecsRelations = relations(vehicleSpecs, ({many})=>({

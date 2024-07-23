@@ -1,6 +1,10 @@
 import { Context } from "hono";
 
 import { getVehicle_SpecificationssService, createVehicle_SpecificationsService, getVehicle_SpecificationsByIdService, updateVehicle_SpecificationsService, DeleteVehicle_SpecificationsByIdService } from "./Vehicle_Specifications.service";
+import { infer, z } from "zod";
+import { VehicleSpecSchema, VehiclesSchema } from "../validator";
+import { createVehiclesService } from "../Vehicles/Vehicles.service";
+import { spec } from "node:test/reporters";
 
 
 export const ListsVehicle_Specificationss = async(c: Context) => {
@@ -27,14 +31,30 @@ export const GetVehicle_SpecificationsById = async(c: Context) => {
 }
 
 export const CreateVehicle_Specifications = async(c: Context) => {
+  let specsId : {specId:number}[] |null = [];
   try {
-    const Vehicle_Specifications = await c.req.json();
-    Vehicle_Specifications.created_at = new Date();
-    const newVehicle_Specifications = await createVehicle_SpecificationsService(Vehicle_Specifications);
-    if(!newVehicle_Specifications) return c.json({ message: "Unable to create"},404);
-    return c.json(newVehicle_Specifications, 201);
+    const vehicleSpecs:z.infer<typeof VehicleSpecSchema> = await c.req.json();
+    
+     specsId = await createVehicle_SpecificationsService(vehicleSpecs);
+    if(!specsId) return c.json({ message: "Unable to create"},404);
+
+    const newVehicle:z.infer<typeof VehiclesSchema> ={
+      vehicleSpec_id: specsId[0].specId,
+      rental_rate:vehicleSpecs.rental_rate,
+      availability:true
+
+    }
+    console.log("🚀 ~ constCreateVehicle_Specifications=async ~ newVehicle:", newVehicle)
+
+    const newVehicleId = await createVehiclesService(newVehicle);
+    if (!newVehicleId) return c.json({ message: "Unable to create"},
+    404);
+    
+    
+    return c.json('Vehicle Created Successfully', 201);
   } catch (error: any) {
-    return c.json({ error: error.message },400);
+    specsId && await DeleteVehicle_SpecificationsByIdService(specsId[0].specId);
+    return c.json({ error:error },400);
   }
    
 }

@@ -80,6 +80,7 @@ export const CheckOut = async(c: Context) => {
     const referrer = c.req.header('referer');
     const paymentDetails = await c.req.json();
     const { amount, bookingId, vehicleSpecs} = paymentDetails;
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -124,6 +125,7 @@ export const HandleWebhook = async(c: Context) => {
   if (event.type === 'checkout.session.completed') {
     const session:Stripe.Checkout.Session = event.data.object;
     console.log(session)
+    
     const booking_id = session.metadata?.bookingId;
     const bookingStatus = 'completed';
 
