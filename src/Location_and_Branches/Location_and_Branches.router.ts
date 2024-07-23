@@ -8,7 +8,7 @@ export const Location_and_BranchesRouter = new Hono().basePath('/branchlocations
 
 Location_and_BranchesRouter.get("",authorizeCustomer, ListsLocation_and_Branchess);
 Location_and_BranchesRouter.get("/:id",authorizeAdmin, GetLocation_and_BranchesById);
-Location_and_BranchesRouter.post("/create",authorizeAdmin,zValidator('json', LocationBranchesSchema, (result, c) => {
+Location_and_BranchesRouter.post("/add",authorizeAdmin,zValidator('json', LocationBranchesSchema, (result, c) => {
   if (!result.success) {
     return c.json(result.error, 400)
   }
