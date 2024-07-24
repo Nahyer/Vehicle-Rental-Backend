@@ -1,6 +1,6 @@
 import { Context } from "hono";
 
-import { getBookingssService, createBookingsService, getBookingsByIdService, updateBookingsService, DeleteBookingsByIdService } from "./Bookings.service";
+import { getBookingssService, createBookingsService, getBookingsByIdService, updateBookingsService, DeleteBookingsByIdService, getBookingsByUserIdService } from "./Bookings.service";
 
 
 export const ListsBookingss = async(c: Context) => {
@@ -18,7 +18,7 @@ export const GetBookingsById = async(c: Context) => {
   try {
     const id = parseInt(c.req.param('id'));
     if (isNaN(id)) return c.text("Invalid ID", 400);
-    const Bookings = await getBookingsByIdService(id);
+    const Bookings = await getBookingsByUserIdService(id);
     if(!Bookings) return c.json({ message: "Bookings not found"},404);
     return c.json(Bookings);
   } catch (error: any) {
