@@ -21,6 +21,7 @@ export const getVehiclessService = async (limit?: number): Promise<TSVehicles[] 
           features: true,
           seating_capacity: true,
           engine_capacity: true,
+          image_url: true
         }
       }
     }
@@ -85,7 +86,8 @@ export const getVehiclesByIdService = async (id: number): Promise<TSVehicles | u
           transmission: true,
           seating_capacity: true,
           color: true,
-          features: true
+          features: true,
+          image_url: true
         }
       }
     }

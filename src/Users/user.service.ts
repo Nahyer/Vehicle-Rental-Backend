@@ -15,7 +15,16 @@ export const getUsersService = async(limit?:number):Promise<TSUser[] | null> =>{
 
 export const getUsersByIdService = async (id: number): Promise<TSUser | undefined> => {
   return await db.query.users.findFirst({
-     where: eq(users.user_id,id)})
+     where: eq(users.user_id,id),
+    with: {
+      authentication: {
+        columns: {
+          username: true,
+          role: true
+        }
+      }
+    }})
+
 }
 
 export const updateUserService = async (id: number, user: TIUser) => {

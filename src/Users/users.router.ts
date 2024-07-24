@@ -10,8 +10,8 @@ import { authorizeAdmin, authorizeCustomer, } from "../middleware/authorize";
 export const userRouter = new Hono().basePath('/users')
 
 userRouter.get('/',authorizeAdmin,ListsUserss)
-userRouter.get('/:id', GetUsersById)
-userRouter.put('/:id', UpdateUsers)
-userRouter.delete('/:id', DeleteUsers)
-userRouter.put('/roleupdate/:id', UpdateUserRole)
-userRouter.post('/create', CreateUsers)
+userRouter.get('/:id',authorizeCustomer, GetUsersById)
+userRouter.put('/update/:id',authorizeCustomer, UpdateUsers)
+userRouter.delete('/:id',authorizeAdmin, DeleteUsers)
+userRouter.put('/roleupdate/:id',authorizeAdmin, UpdateUserRole)
+userRouter.post('/create',authorizeAdmin, CreateUsers)

@@ -1,34 +1,25 @@
 import "dotenv/config"
 import { Context, Next} from "hono"
-import { validateJWT } from "oslo/jwt";
-import { secret } from "../Authentication/auth.contoller";
+import { verify } from "hono/jwt";
+
+
 export interface ITokenPayload {
     userId: number;
     username: string;
     role: "admin" | "customer";
 }
 
-export const verifyToken = async (token: string) => {
-    console.log("🚀 ~ verifyToken ~ token:", token)
-    try{
-        
-        // const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-        console.log("🚀 ~ verifyToken ~ secret:", secret)
-        
-        return await validateJWT("HS256",secret, token);
-    }catch(e: any){
-        return null;
-    }
-}
 
 export const authorize = async (c: Context, next: Next, requiredRole: string) => {
     const token = c.req.header("Authorization");
     console.log("🚀 ~ authorize ~ token:", token)
     if(!token)return c.json({error:"No token provided"}, 401);
-    const decoded = await verifyToken(token);
+    const decoded = await verify(token, process.env.JWT_SECRET as string);
     console.log("🚀 ~ authorize ~ decoded:", decoded)
+
     if(!decoded)return c.json({error:"Invalid token"}, 401);
-    const {role} = decoded.payload as ITokenPayload;
+    // if (!decoded.payload) return c.json({ error: "Invalid payload" }, 401);
+    const {role} = decoded
     if(role === requiredRole || role === "admin"  ){
         return next();      
     }

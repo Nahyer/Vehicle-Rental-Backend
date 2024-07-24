@@ -3,6 +3,7 @@ import { zValidator } from "@hono/zod-validator";
 import { authSchema, loginSchema } from "../validator";
 import { signInUser, signUpUser } from "./auth.contoller";
 
+
 export const authRouter = new Hono().basePath('/auth')
 
 authRouter.post('/register', zValidator('json', authSchema,(result,c)=>{

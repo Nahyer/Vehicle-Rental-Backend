@@ -20,7 +20,7 @@ export const createAuthUserService = async (user: TAuthUser): Promise<string | n
         where: sql`${authentication.username}= ${user.username}`
     })
     if (userExists) {
-        throw new Error("User already exists")
+        return "User already exists"
     }
     await db.insert(users).values({
         full_name: user.fullname,
@@ -29,7 +29,7 @@ export const createAuthUserService = async (user: TAuthUser): Promise<string | n
         address: user.address
     })
     const userId = await getUserAService(user)
-    if (!userId) throw new Error("User not found")
+    if (!userId) return "User not found"
 
     await db.insert(authentication).values({
         user_id: userId.user_id,
@@ -49,6 +49,7 @@ export const loginAuthUserService = async (user: TAuthUser) => {
             user_id: true,
             password: true,
             role: true
+        
         },
         where: sql`${authentication.username} = ${username}`,
         with: {
@@ -58,6 +59,8 @@ export const loginAuthUserService = async (user: TAuthUser) => {
                     full_name: true,
                     email: true,
                     contact_phone: true,
+                    address: true
+
                 }
             }
         }

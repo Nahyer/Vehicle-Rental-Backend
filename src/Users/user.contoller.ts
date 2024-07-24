@@ -1,6 +1,6 @@
 import { Context } from "hono";
 import { DeleteUsersByIdService, getUsersByIdService, getUsersService, updateUserRoleService, updateUserService } from "./user.service";
-import { Argon2id } from "oslo/password";
+import bcrypt from 'bcrypt';
 import { createAuthUserService } from "../Authentication/auth.service";
 
 export const ListsUserss = async(c: Context) => {
@@ -30,10 +30,9 @@ export const CreateUsers = async(c: Context) => {
     try {
         const users = await c.req.json();
         users.created_at = new Date();
-        const passw = users.password;
-        const argon2id = new Argon2id();
-		const hashedPassword = await argon2id.hash(passw);
-        users.password = hashedPassword;
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPass = bcrypt.hashSync(users.password, salt);
+        users.password = hashedPass;
         const newUsers = await createAuthUserService(users);
         if(!newUsers) return c.json({ message: "Unable to create"},404);
         return c.json(newUsers, 201);

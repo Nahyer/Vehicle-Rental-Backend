@@ -9,7 +9,7 @@ BookingsRouter.get("", ListsBookingss);
 BookingsRouter.get("/:id", GetBookingsById);
 BookingsRouter.post("/add",zValidator('json', BookingsSchema, (result, c) => {
   if (!result.success) {
-    return c.json("result.error", 400)
+    return c.json(result.error, 400)
   }
 }),CreateBookings);
 BookingsRouter.put("/:id", UpdateBookings);

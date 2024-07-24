@@ -6,7 +6,7 @@ import { zValidator } from "@hono/zod-validator";
 import { authorizeAdmin, authorizeCustomer } from "../middleware/authorize";
 export const VehiclesRouter = new Hono().basePath('/vehicles')
 
-VehiclesRouter.get("",authorizeCustomer, ListsVehicless);
+VehiclesRouter.get("", ListsVehicless);
 VehiclesRouter.get("/available",authorizeCustomer, ListsVehicless);
 VehiclesRouter.get("/:id", GetVehiclesById);
 VehiclesRouter.post("/create",authorizeAdmin,zValidator('json', VehiclesSchema, (result, c) => {

@@ -120,22 +120,29 @@ export const fleetManagementRelations = relations(fleetManagement, ({one})=>({
         references: [vehicles.vehicle_id]
     })
 }))
-
+export const active_enum = pgEnum("active_enum", ["active", "inactive"])
 export const users = pgTable("users", {
     user_id: serial('user_id').primaryKey(),
     full_name: varchar('full_name').notNull(),
     email: varchar('email').notNull().unique(),
     contact_phone: varchar('contact_phone').notNull(),
     address: varchar('address').notNull(),
+    status: active_enum('status').default('active'),
     created_at: timestamp('created_at').defaultNow(),
     updated_at: timestamp('updated_at').defaultNow()
     //profilePicture
 })
 
-export const usersRelations = relations(users, ({many})=>({
+export const usersRelations = relations(users, ({one,many})=>({
     bookings: many(bookings),
-    customerSupportTickets: many(customerSupportTickets)
+    customerSupportTickets: many(customerSupportTickets),
+    authentication: one(authentication,{
+        fields: [users.user_id],
+        references: [authentication.user_id]
+    
+    })
 }))
+
 
 export const customerSupportTickets = pgTable("customer_support_tickets", {
     ticket_id: serial('ticket_id').primaryKey(),

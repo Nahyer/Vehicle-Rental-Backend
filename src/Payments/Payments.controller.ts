@@ -96,8 +96,8 @@ export const CheckOut = async(c: Context) => {
         },
       ],
       mode: "payment",
-      success_url: `${referrer}customer/booking-successful`,
-      cancel_url: `${referrer}customer/booking-cancelled`,
+      success_url: `${referrer}customer/vehicles`,
+      cancel_url: `${referrer}customer/vehicles`,
       metadata: {
         bookingId: bookingId as number,
       },
