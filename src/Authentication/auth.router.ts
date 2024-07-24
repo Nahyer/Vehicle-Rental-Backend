@@ -12,4 +12,5 @@ authRouter.post('/register', zValidator('json', authSchema,(result,c)=>{
 
 authRouter.post('/login', zValidator('json',loginSchema,(result,c)=>{
     if(!result.success) return c.json(result.error,400)
+        
 }), signInUser)
