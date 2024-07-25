@@ -77,9 +77,9 @@ export const DeletePayments = async(c: Context) => {
 
 export const CheckOut = async(c: Context) => {
   try {
-    const referrer = c.req.header('referer');
     const paymentDetails = await c.req.json();
     const { amount, bookingId, vehicleSpecs} = paymentDetails;
+    console.log("🚀 ~ CheckOut ~ paymentDetails:", paymentDetails)
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -96,14 +96,15 @@ export const CheckOut = async(c: Context) => {
         },
       ],
       mode: "payment",
-      success_url: `${referrer}vehicles`,
-      cancel_url: `${referrer}vehicles`,
+      success_url: `https://gentle-river-05c4faf10.5.azurestaticapps.net/vehicles`,
+      cancel_url: `https://gentle-river-05c4faf10.5.azurestaticapps.net/vehicles`,
       metadata: {
         bookingId: bookingId as number,
       },
     });
     return c.json({ id: session.id });
-  } catch (error:any) {
+  }
+  catch (error:any) {
     console.error(error);
     return c.json({ message: error.message }, { status: 500 });
   }
