@@ -20,7 +20,7 @@ export const signUpUser = async (c: Context) => {
 		if (!cUser) return c.json({ message: "User not created" }, 400);
 		return c.json(cUser, 201);
 	} catch (e: any) {
-		return c.json(e.message, 400);
+		return c.json(e, 400);
 	}
 };
 
@@ -32,6 +32,7 @@ export const signInUser = async (c: Context) => {
 
         const verifai = bcrypt.compareSync(user.password,lUser.password );
         console.log("🚀 ~ signInUser ~ verifai:", verifai)
+        
         if (!verifai) return c.json({ error: "Invalid Credetials" }, 401);
         const payload = {
             userId: lUser.user_id,
@@ -46,6 +47,6 @@ export const signInUser = async (c: Context) => {
 
         return c.json({ token, user: { ...uUser, role,username } }, 200);
     } catch (e: any) {
-        return c.json(e.message, 400);
+        return c.json(e, 400);
     }
 };
